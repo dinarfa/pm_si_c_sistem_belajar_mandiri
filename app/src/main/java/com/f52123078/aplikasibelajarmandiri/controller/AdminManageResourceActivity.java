@@ -1,4 +1,4 @@
-package com.f52123078.aplikasibelajarmandiri.viewModel;
+package com.f52123078.aplikasibelajarmandiri.controller;
 
 
 import android.os.Bundle;
@@ -16,7 +16,6 @@ import com.f52123078.aplikasibelajarmandiri.model.MataKuliah;
 import com.f52123078.aplikasibelajarmandiri.model.Prodi;
 import com.f52123078.aplikasibelajarmandiri.model.Resource;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class AdminManageResourceActivity extends AppCompatActivity

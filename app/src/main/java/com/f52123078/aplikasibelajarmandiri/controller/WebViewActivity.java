@@ -1,16 +1,16 @@
-package com.f52123078.aplikasibelajarmandiri.viewModel; // Sesuaikan package
+package com.f52123078.aplikasibelajarmandiri.controller; // Sesuaikan package
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings; // Import ini
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-// Sesuaikan import package
 import com.f52123078.aplikasibelajarmandiri.databinding.ActivityWebViewBinding;
 
 public class WebViewActivity extends AppCompatActivity {
@@ -38,8 +38,21 @@ public class WebViewActivity extends AppCompatActivity {
         }
         binding.toolbarWebview.setNavigationOnClickListener(v -> finish());
 
-        // Setup WebView
-        binding.webView.getSettings().setJavaScriptEnabled(true); // Wajib untuk banyak website
+        // --- SETUP WEBVIEW (PENTING) ---
+        WebSettings settings = binding.webView.getSettings();
+
+        // 1. Wajib untuk website modern
+        settings.setJavaScriptEnabled(true);
+
+        // 2. SOLUSI UTAMA: Aktifkan DOM Storage (Agar CodeDex dll bisa jalan)
+        settings.setDomStorageEnabled(true);
+
+        // 3. Tambahan untuk kompatibilitas lebih baik
+        settings.setDatabaseEnabled(true);
+        settings.setLoadWithOverviewMode(true);
+        settings.setUseWideViewPort(true);
+        settings.setBuiltInZoomControls(true);
+        settings.setDisplayZoomControls(false); // Sembunyikan tombol zoom +/-
 
         // Set WebViewClient agar link tetap terbuka di dalam aplikasi
         binding.webView.setWebViewClient(new WebViewClient() {
@@ -53,7 +66,8 @@ public class WebViewActivity extends AppCompatActivity {
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 binding.progressBarWeb.setVisibility(View.GONE);
-                // Set judul toolbar dari halaman web jika intent tidak kirim judul
+
+                // Update judul toolbar jika judul awal kosong
                 if (title == null || title.isEmpty()) {
                     if (getSupportActionBar() != null) {
                         getSupportActionBar().setTitle(view.getTitle());
@@ -82,7 +96,6 @@ public class WebViewActivity extends AppCompatActivity {
         }
     }
 
-    // Handle tombol back di HP agar kembali ke halaman web sebelumnya
     @Override
     public void onBackPressed() {
         if (binding.webView.canGoBack()) {

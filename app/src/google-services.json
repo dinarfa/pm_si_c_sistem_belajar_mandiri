@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "629725998565",
+    "project_id": "studygate-2658b",
+    "storage_bucket": "studygate-2658b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:629725998565:android:1a989f52087145836c930c",
+        "android_client_info": {
+          "package_name": "com.f52123078.aplikasibelajarmandiri"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "629725998565-e33dbk0grshd4ioac714cab54d1kh2lh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.f52123078.aplikasibelajarmandiri",
+            "certificate_hash": "9b21e5035336f472aaf539fb89baf6f2dc9544ea"
+          }
+        },
+        {
+          "client_id": "629725998565-tt5dq33kec9jl7k41tts5pgd8us2c8fg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbw0z12gSeIxabeE7xvuhSxZOsaAEoyt8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "629725998565-tt5dq33kec9jl7k41tts5pgd8us2c8fg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

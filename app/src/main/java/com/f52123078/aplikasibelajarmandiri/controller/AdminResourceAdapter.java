@@ -1,4 +1,4 @@
-package com.f52123078.aplikasibelajarmandiri.viewModel;
+package com.f52123078.aplikasibelajarmandiri.controller;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;

@@ -12,6 +12,11 @@
         android:title="Resources"/>
 
     <item
+        android:id="@+id/navigation_forum"
+        android:icon="@drawable/chat"
+        android:title="Forum"/>
+
+    <item
         android:id="@+id/navigation_account"
         android:icon="@drawable/person"
         android:title="Account"/>

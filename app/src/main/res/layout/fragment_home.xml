@@ -14,13 +14,31 @@
         android:orientation="vertical"
         android:padding="20dp">
 
-        <!-- Pesan Selamat Datang -->
-        <TextView
-            android:id="@+id/tv_welcome_message"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="24dp"> <TextView
+            android:id="@+id/tv_welcome_message"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
             tools:text="Selamat Datang, Nama User!" />
+
+            <ImageButton
+                android:id="@+id/btn_notification"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+
+                android:src="@drawable/notifications"
+
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:scaleType="fitCenter"
+                android:padding="12dp"
+                android:contentDescription="Notifikasi" />
+        </LinearLayout>
 
         <!-- Bagian "Lanjutkan Belajar" (Placeholder) -->
         <com.google.android.material.card.MaterialCardView

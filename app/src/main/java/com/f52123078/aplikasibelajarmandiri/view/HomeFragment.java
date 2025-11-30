@@ -2,7 +2,6 @@ package com.f52123078.aplikasibelajarmandiri.view;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,10 +17,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.f52123078.aplikasibelajarmandiri.databinding.FragmentHomeBinding;
 import com.f52123078.aplikasibelajarmandiri.model.HomeModel;
 import com.f52123078.aplikasibelajarmandiri.model.Resource;
-import com.f52123078.aplikasibelajarmandiri.viewModel.MainActivity;
-import com.f52123078.aplikasibelajarmandiri.viewModel.ResourceAdapter;
-import com.f52123078.aplikasibelajarmandiri.viewModel.ResourceBrowseActivity;
-import com.f52123078.aplikasibelajarmandiri.viewModel.WebViewActivity;
+import com.f52123078.aplikasibelajarmandiri.controller.MainActivity;
+import com.f52123078.aplikasibelajarmandiri.NotificationActivity;
+import com.f52123078.aplikasibelajarmandiri.controller.ResourceAdapter;
+import com.f52123078.aplikasibelajarmandiri.controller.ResourceBrowseActivity;
+import com.f52123078.aplikasibelajarmandiri.controller.WebViewActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +60,14 @@ public class HomeFragment extends Fragment implements HomeModel.HomeDataListener
             showLoading(false);
             Toast.makeText(requireContext(), "Layanan tidak tersedia", Toast.LENGTH_LONG).show();
         }
+
+        // Listener Tombol Notifikasi (Lonceng)
+        if (binding.btnNotification != null) {
+            binding.btnNotification.setOnClickListener(v -> {
+                Intent intent = new Intent(requireContext(), NotificationActivity.class);
+                startActivity(intent);
+            });
+        }
     }
 
     private void setupRecyclerView() {
@@ -88,16 +96,16 @@ public class HomeFragment extends Fragment implements HomeModel.HomeDataListener
                 Context context = requireContext();
                 Intent intent = new Intent(context, WebViewActivity.class);
 
-                // --- LOGIKA PALING FINAL (HANYA MENGUBAH YOUTUBE) ---
+                // --- LOGIKA FINAL (HANYA MENGUBAH YOUTUBE) ---
                 String lowerUrl = urlToLoad.toLowerCase();
                 if (lowerUrl.contains("youtube.com/watch?v=")) {
-                    // Hanya ubah jika ini link 'watch' YouTube
-                    String videoId = urlToLoad.split("v=")[1].split("&")[0];
-                    urlToLoad = "https://www.youtube.com/embed/" + videoId;
+                    try {
+                        String videoId = urlToLoad.split("v=")[1].split("&")[0];
+                        urlToLoad = "https://www.youtube.com/embed/" + videoId;
+                    } catch (Exception e) {
+                        Log.e(TAG, "Error parsing YouTube URL", e);
+                    }
                 }
-                // PDF, GDrive, Website dikirim apa adanya (RAW URL)
-                // KITA TIDAK PAKAI 'gview' LAGI
-                // --- BATAS PERUBAHAN ---
 
                 intent.putExtra(WebViewActivity.EXTRA_URL, urlToLoad);
                 intent.putExtra(WebViewActivity.EXTRA_TITLE, title);
@@ -120,21 +128,21 @@ public class HomeFragment extends Fragment implements HomeModel.HomeDataListener
         binding.tvWelcomeMessage.setText("Selamat Datang, " + (userName != null ? userName : ""));
     }
 
-    // Dua-parameter overload (dipakai bila model mengirim docIds)
+    // --- PERBAIKAN UTAMA ADA DI SINI ---
     @Override
     public void onRecentResourcesLoaded(List<Resource> resources, List<String> documentIds) {
         if (binding == null) return;
         showLoading(false);
 
         if (resources == null) resources = new ArrayList<>();
-        if (documentIds == null) documentIds = new ArrayList<>();
 
-        resourceAdapter = new ResourceAdapter(resources, documentIds);
+        // KITA HANYA MENGIRIM 'resources' SAJA (1 PARAMETER)
+        // Sesuai dengan ResourceAdapter baru yang kita buat sebelumnya
+        resourceAdapter = new ResourceAdapter(resources);
+
         binding.recyclerViewRecent.setAdapter(resourceAdapter);
         binding.recyclerViewRecent.setVisibility(resources.isEmpty() ? View.GONE : View.VISIBLE);
     }
-
-    // Satu-parameter overload
 
     @Override
     public void onLastAccessedLoaded(@Nullable Map<String, Object> lastAccessedData) {
